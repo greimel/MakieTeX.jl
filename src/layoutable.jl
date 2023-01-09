@@ -1,4 +1,4 @@
-import Makie.MakieLayout: inherit
+import CairoMakie.Makie.MakieLayout: inherit
 
 # This code has basically been adapted from the Label code in the main repo.
 
@@ -48,7 +48,7 @@ function Makie.MakieLayout.initialize_block!(l::LTeX)
         topscene, cached_tex; position = textpos, visible = l.visible,
         scale = l.scale, render_density = l.render_density, align = (:center, :center),
         rotations=l.rotation,
-        markerspace = :screen,
+        markerspace = :pixel,
         inspectable = false
     )
 

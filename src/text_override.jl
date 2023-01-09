@@ -204,8 +204,8 @@ end
 # which path is taken, but that would likely have to be done in Makie itself.
 
 function Makie.plot!(t::Makie.Text{<: Tuple{<:LaTeXString}})
-    plottable_cached_tex = lift(t[1], t.font, t.textsize, t.lineheight, t.color) do ltex, font, textsize, lineheight, color
-        CachedTeX[to_plottable_cachedtex(ltex, font, textsize, lineheight, to_color(color))]
+    plottable_cached_tex = lift(t[1], t.font, t.fontsize, t.lineheight, t.color) do ltex, font, fontsize, lineheight, color
+        CachedTeX[to_plottable_cachedtex(ltex, font, fontsize, lineheight, to_color(color))]
     end
 
     teximg!(t, plottable_cached_tex; position=lift(to_array, t.position), scale = 1, render_density = TEXT_RENDER_DENSITY[], align = t.align, rotations = t.rotation, visible = t.visible)
@@ -215,9 +215,9 @@ function Makie.plot!(t::Makie.Text{<: Tuple{<: AbstractVector{<: LaTeXString}}})
     old_ltex = Ref(t[1][])
 
     plottable_cached_texs = Observable{Vector{CachedTeX}}()
-    onany(t[1], t.font, t.textsize, t.lineheight, t.color) do ltexs, font, textsize, lineheight, color
+    onany(t[1], t.font, t.fontsize, t.lineheight, t.color) do ltexs, font, fontsize, lineheight, color
         if !(ltexs == old_ltex)
-            plottable_cached_texs.val = _plottable_cachedtex_from_array(ltexs, font, textsize, lineheight, to_color(color))
+            plottable_cached_texs.val = _plottable_cachedtex_from_array(ltexs, font, fontsize, lineheight, to_color(color))
             notify(plottable_cached_texs)
             old_ltex[] = ltexs
         else
